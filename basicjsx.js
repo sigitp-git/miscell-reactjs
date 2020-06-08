@@ -178,6 +178,7 @@ renderOptions()
 
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 // Using state in React Class Components
+// React State change will trigger auto re-render only on the virtual DOM that changed
 
 class Counter extends React.Component {
   constructor(props) {
