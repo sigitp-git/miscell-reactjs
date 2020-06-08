@@ -2,18 +2,39 @@ class IndecisionApp extends React.Component {
   constructor(props) {
     super(props)
     this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
+    this.handleDeleteOption = this.handleDeleteOption.bind(this)
     this.handleAddOptions = this.handleAddOptions.bind(this)
     this.handlePickOptions = this.handlePickOptions.bind(this)
     this.state = {
-      options: [],
+      // use IndecisionApp.defaultProps = { options: [] }
+      options: props.options,
     }
   }
 
+  // React LifeCycle Methods, only no class based Components
+  componentDidMount() {
+    console.log('mount, fetch data')
+  }
+
+  // React LifeCycle Methods, only no class based Components
+  componentDidUpdate(prevProps, prevState) {
+    console.log('update, save data')
+    // console.log(prevProps, this.props)
+    // console.log(prevState, this.state)
+  }
+
   handleDeleteOptions() {
-    this.setState(() => {
-      return { options: [] }
-    })
-    console.log('delete all')
+    this.setState(() => ({ options: [] }))
+  }
+
+  componentWillUnmount() {
+    console.log('unmount')
+  }
+
+  handleDeleteOption(optext) {
+    this.setState((prevState) => ({
+      options: prevState.options.filter((op) => op !== optext),
+    }))
   }
 
   handleAddOptions(opt) {
@@ -22,9 +43,7 @@ class IndecisionApp extends React.Component {
     } else if (this.state.options.indexOf(opt) > -1) {
       return 'This option already exists'
     } else {
-      this.setState((prevState) => {
-        return { options: prevState.options.concat(opt) }
-      })
+      this.setState((prevState) => ({ options: prevState.options.concat(opt) }))
     }
   }
 
@@ -48,11 +67,16 @@ class IndecisionApp extends React.Component {
         <Options
           options={this.state.options}
           handleDeleteOptions={this.handleDeleteOptions}
+          handleDeleteOption={this.handleDeleteOption}
         />
         <AddOption handleAddOptions={this.handleAddOptions} />
       </div>
     )
   }
+}
+
+IndecisionApp.defaultProps = {
+  options: [],
 }
 
 const Header = (props) => {
@@ -74,24 +98,41 @@ const Action = (props) => {
   )
 }
 
-class Options extends React.Component {
-  render() {
-    return (
-      <div>
-        <h3>There are {this.props.options.length} options:</h3>
-        <ol>
-          {this.props.options.map((opt, i) => (
-            <Option key={i} optionText={opt} />
-          ))}
-        </ol>
-        <button onClick={this.props.handleDeleteOptions}>Remove All</button>
-      </div>
-    )
-  }
+const Options = (props) => {
+  return (
+    <div>
+      <h3>There are {props.options.length} options:</h3>
+      <ol>
+        {props.options.map((opt, i) => (
+          <Option
+            key={i}
+            optionText={opt}
+            handleDeleteOption={props.handleDeleteOption}
+          />
+        ))}
+      </ol>
+      <button onClick={props.handleDeleteOptions}>Remove All</button>
+    </div>
+  )
 }
 
+// inline arrow function onClick since onClick works with (e) as input,
+// but we want to use props.optionText as input instead
 const Option = (props) => {
-  return <li>{props.optionText}</li>
+  return (
+    <div>
+      <li>
+        {props.optionText}{' '}
+        <button
+          onClick={(e) => {
+            props.handleDeleteOption(props.optionText)
+          }}
+        >
+          remove
+        </button>
+      </li>
+    </div>
+  )
 }
 
 class AddOption extends React.Component {
@@ -102,17 +143,17 @@ class AddOption extends React.Component {
       error: undefined,
     }
   }
+
   addOption(e) {
     e.preventDefault()
     const option = e.target.elements.optionsubmit.value.trim()
     const err = this.props.handleAddOptions(option)
 
-    this.setState(() => {
-      return { error: err }
-    })
+    this.setState(() => ({ error: err }))
 
     e.target.elements.optionsubmit.value = ''
   }
+
   render() {
     return (
       <div>
@@ -126,4 +167,6 @@ class AddOption extends React.Component {
   }
 }
 
+// // uses IndecisionApp.defaultProps = { options: [] }
+// ReactDOM.render(<IndecisionApp options={['one', 'two']}/>, document.getElementById('AppDiv'))
 ReactDOM.render(<IndecisionApp />, document.getElementById('AppDiv'))
