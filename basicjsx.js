@@ -180,6 +180,7 @@ renderOptions()
 // Using state in React Class Components
 // React State change will trigger auto re-render only on the virtual DOM that changed
 
+////// @@@@@@@@@@@@@@@@@@ Counter Example
 class Counter extends React.Component {
   constructor(props) {
     super(props)
@@ -187,25 +188,51 @@ class Counter extends React.Component {
     this.handleMinusOne = this.handleMinusOne.bind(this)
     this.handleReset = this.handleReset.bind(this)
     this.state = {
-      // use Counter.defaultProps = { count: 0 }
-      count: props.option,
+      //// use Counter.defaultProps = { count: 0 }
+      // count: props.option,
+      count: 0,
     }
   }
+
+  componentDidMount() {
+    try {
+      const stringCount = localStorage.getItem('count')
+      const count = parseInt(stringCount, 10)
+
+      if (!isNaN(count)) {
+        this.setState(() => ({ count: count }))
+      }
+    } catch (e) {
+      // do nothing
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.count !== this.state.count) {
+      localStorage.setItem('count', this.state.count)
+      //// making sure only store when there is change, reset 0 from 0 should not call storage update
+      // console.log('updated')
+    }
+  }
+
   handlePlusOne() {
     this.setState((prevState) => {
       return { count: prevState.count + 1 }
     })
   }
+
   handleMinusOne() {
     this.setState((prevState) => {
       return { count: prevState.count - 1 }
     })
   }
+
   handleReset() {
     this.setState(() => {
       return { count: 0 }
     })
   }
+
   render() {
     return (
       <div>
@@ -218,7 +245,9 @@ class Counter extends React.Component {
   }
 }
 
-Counter.defaultProps = { count: 0 }
+// // Default Props Commented for localStorage usage
+// Counter.defaultProps = { count: 0 }
+////// @@@@@@@@@@@@@@@@@@ Counter Example
 
 
 // second example of RCC state
