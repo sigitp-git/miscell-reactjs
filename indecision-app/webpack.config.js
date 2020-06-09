@@ -1,21 +1,23 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
   entry: './src/app.js',
   output: {
     path: path.join(__dirname, 'public'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
-    rules: [{
-      loader: 'babel-loader',
-      test: /\.js$/,
-      exclude: /node_modules/
-    }]
+    rules: [
+      {
+        loader: 'babel-loader',
+        test: /\.js$/,
+        exclude: /node_modules/,
+      },
+    ],
   },
   devtool: 'cheap-module-eval-source-map',
   // webpack-dev-server serve bundle.js from memory, not from physical disk
   devServer: {
-    contentBase: path.join(__dirname, 'public')
-  }
-};
+    contentBase: path.join(__dirname, 'public'),
+  },
+}
