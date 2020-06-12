@@ -110,11 +110,19 @@ const filtersReducer = (state = filtersReducerDefState, action) => {
 const getFilteredExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
     return expenses.filter((exp) => {
         // returns true for match, match means shown on the filteredNotes=getFilteredNotes()
-        const textMatch = exp.description.toLowerCase().match(text) || exp.note.toLowerCase().match(text)
+        const textMatch = exp.description.toLowerCase().includes(text) || exp.note.toLowerCase().includes(text)
         const startDateMatch = typeof startDate !== 'number' || exp.createdAt >= startDate
         const endDateMatch = typeof endDate !== 'number' || exp.createdAt <= endDate
 
         return textMatch && startDateMatch && endDateMatch
+    }).sort((a, b) => {
+        if (sortBy === 'date') {
+            return a.createdAt > b.createdAt ? -1 : 1
+        } else if (sortBy === 'amount') {
+            return a.amount > b.amount ? -1 : 1
+        } else {
+            return 0
+        }
     })
 }
 
@@ -135,17 +143,17 @@ store.subscribe(() => {
 // // @@@@@@@@@@@DISPATCHES
 // // Writing how function being called first then work out the function details is good practice
 // // Expenses State Dispatch
-const expense1 = store.dispatch(addExpense({ description: 'Rent', amount: 100, createdAt: 500 }))
+const expense1 = store.dispatch(addExpense({ description: 'Rent', amount: 1000, createdAt: 500 }))
 const expense2 = store.dispatch(addExpense({ description: 'Car', amount: 300, createdAt: 1500 }))
 // store.dispatch(removeExpense({ id: expense1.expense.id }))
 // store.dispatch(editExpense(expense2.expense.id, { amount: 800 }))
 
 // // Filter State Dispatch
-store.dispatch(setTextFilter())
-// store.dispatch(sortByAmount())
+// store.dispatch(setTextFilter())
+store.dispatch(sortByAmount())
 // store.dispatch(sortByDate())
-store.dispatch(setStartDate(125))
-store.dispatch(setEndDate(1250))
+// store.dispatch(setStartDate(125))
+// store.dispatch(setEndDate(1250))
 
 // @@@@@@@@@@@State Definition ( written first)
 const demoState = {
