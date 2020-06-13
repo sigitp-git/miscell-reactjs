@@ -105,6 +105,7 @@ const filtersReducer = (state = filtersReducerDefState, action) => {
   }
 }
 
+// @@@@@@@@@@@Selectors
 // Get Filtered Expenses
 // timestamp in milliseconds, timezone independent, unix epoch, jan 01 1970
 const getFilteredExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
@@ -155,7 +156,7 @@ store.dispatch(sortByAmount())
 // store.dispatch(setStartDate(125))
 // store.dispatch(setEndDate(1250))
 
-// @@@@@@@@@@@State Definition ( written first)
+// @@@@@@@@@@@State Definition ( written first), just for white-boarding in constructing the states
 const demoState = {
   expenses: [
     {
