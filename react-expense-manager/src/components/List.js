@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from 'react-router-dom'
 import Item from './Item'
 import getFiltered from '../selectors/expenses'
 // connect() function is reactive, when state changes, connect keeps updating the state

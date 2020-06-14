@@ -14,10 +14,12 @@ import './styles/styles.scss'
 
 const store = configureStore()
 
-const expense1 = store.dispatch(addExpense({ description: 'Rent', amount: 4500, createdAt: 1599998899999}))
-const expense2 = store.dispatch(addExpense({ description: 'Car', amount: 500, createdAt: 1499998899999 }))
-const expense3 = store.dispatch(addExpense({ description: 'Water', amount: 200, createdAt: 1577798899999 }))
-const expense4 = store.dispatch(addExpense({ description: 'Gas', amount: 300, createdAt: 1598898666666 }))
+// amount stored in cents to sort
+// createdAt stored in unix timestam to sort
+const expense1 = store.dispatch(addExpense({ description: 'Rent', note: 'monthly housing', amount: 457566, createdAt: 1599998899999}))
+const expense2 = store.dispatch(addExpense({ description: 'Car', note: 'toyota camry', amount: 53354, createdAt: 1499998899999 }))
+const expense3 = store.dispatch(addExpense({ description: 'Water', note: 'city water company', amount: 21198, createdAt: 1577798899999 }))
+const expense4 = store.dispatch(addExpense({ description: 'Gas', note: 'city gas company', amount: 33487, createdAt: 1598898666666 }))
 
 
 // const state = store.getState()

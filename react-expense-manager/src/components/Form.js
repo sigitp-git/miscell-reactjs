@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import DatePicker from 'react-date-picker'
 
+// Form used in both Edit and Add (Reusable Form)
+// on Add, initial state is empty
+// on Edit, props containing the state is sent, useEffect used to update the state
 const Form = (props) => {
   //local state also can be used with redux
   const [desc, setDesc] = useState('')
@@ -51,6 +54,16 @@ const Form = (props) => {
     setNote('')
   }
 
+  if (props.expense) {
+    useEffect(() => {
+        const dateObj = new Date(props.expense.createdAt)
+        setDesc(props.expense.description)
+        setNote(props.expense.note)
+        setAmt((props.expense.amount/100).toString())
+        setDatePicker(dateObj)
+      }, [props.expense])
+  }
+
   return (
     <div>
       <DatePicker value={datePicker} onChange={onDatePickChange} />
@@ -74,7 +87,7 @@ const Form = (props) => {
           value={note}
           onChange={(e) => onChangeNote(e)}
         ></textarea>
-        <button>create expense</button>
+        <button>submit</button>
       </form>
     </div>
   )
