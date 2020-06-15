@@ -1,9 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { removeExpense } from '../actions/expenses'
-import { connect } from 'react-redux'
 
-const Item = ({ id, description, note, amount, createdAt, dispatch }) => {
+const Item = ({ id, description, note, amount, createdAt }) => {
   const dateObj = new Date(createdAt)
   const date = dateObj.toLocaleString('en-US', {
     month: 'short',
@@ -20,11 +18,8 @@ const Item = ({ id, description, note, amount, createdAt, dispatch }) => {
         Amount: ${amount / 100} - Created On: {date}
       </p>
       <p>Note: {note}</p>
-      <button onClick={() => dispatch(removeExpense(id))}>remove</button>
     </div>
   )
 }
 
-const ConnectedItem = connect()(Item)
-
-export default ConnectedItem
+export default Item

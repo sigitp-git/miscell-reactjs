@@ -10,18 +10,18 @@ import { connect } from 'react-redux'
 const List = (props) => (
   <div>
     <h1>Expense List</h1>
-    {props.expenses.map((item) =>(
-      <Item key={item.id} {...item}/>
+    {props.expenses.map((item) => (
+      <Item key={item.id} {...item} />
     ))}
   </div>
 )
 
 const mapStateToProps = (state) => {
-    // Return send props to the wrapped component List
-    // These states keeps updating and re-rendering during state changes
-    return {
-        expenses: getFiltered(state.expenses, state.filters)
-    }
+  // Return send props to the wrapped component List
+  // These states keeps updating and re-rendering during state changes
+  return {
+    expenses: getFiltered(state.expenses, state.filters),
+  }
 }
 
 // Connect the Store to this Component

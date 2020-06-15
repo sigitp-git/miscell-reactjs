@@ -56,12 +56,12 @@ const Form = (props) => {
 
   if (props.expense) {
     useEffect(() => {
-        const dateObj = new Date(props.expense.createdAt)
-        setDesc(props.expense.description)
-        setNote(props.expense.note)
-        setAmt((props.expense.amount/100).toString())
-        setDatePicker(dateObj)
-      }, [props.expense])
+      const dateObj = new Date(props.expense.createdAt)
+      setDesc(props.expense.description)
+      setNote(props.expense.note)
+      setAmt((props.expense.amount / 100).toString())
+      setDatePicker(dateObj)
+    }, [props.expense])
   }
 
   return (
