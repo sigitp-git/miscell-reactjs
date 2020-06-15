@@ -7,7 +7,8 @@
   "scripts": {
     "serve": "live-server public/",
     "build": "webpack",
-    "dev-server": "webpack-dev-server"
+    "dev-server": "webpack-dev-server",
+    "test": "jest"
   },
   "dependencies": {
     "@babel/core": "^7.10.2",
@@ -40,6 +41,7 @@
     "webpack-dev-server": "3.11.0"
   },
   "devDependencies": {
+    "jest": "^26.0.1",
     "webpack-cli": "^3.3.11"
   }
 }

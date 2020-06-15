@@ -31,9 +31,6 @@ const Filters = (props) => {
     }
   }
 
-  console.log(props.filters.startDate.getYear())
-  console.log(props.filters.endDate.getYear())
-
   useEffect(() => {
     if (!pickerCleared) {
       setDatePicker([props.filters.startDate, props.filters.endDate])
